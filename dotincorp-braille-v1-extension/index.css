@@ -1,0 +1,38 @@
+body {
+	width: 300px;
+	height: 100%;
+}
+.flex-row {
+	display: flex;
+	flex-direction: row;
+}
+.flex-col {
+	display: flex;
+	flex-direction: column;
+}
+.gap-1 {
+	gap: 1em;
+}
+.flex-1 {
+	flex: 1;
+}
+.justify-center {
+	justify-content: center;
+}
+.align-center {
+	align-items: center;
+}
+div:has(textarea) {
+	height: 400px;
+}
+textarea {
+	resize: none;
+	height: 100%;
+	overflow: auto;
+}
+#response-unicode {
+	font-size: xx-large;
+}
+img {
+	object-fit: contain;
+}
