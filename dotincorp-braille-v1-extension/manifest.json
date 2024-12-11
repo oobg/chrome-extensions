@@ -17,8 +17,5 @@
   "host_permissions": [
     "https://dev-apps.dotincorp.com/*",
     "https://apps-dotincorp.com/*"
-  ],
-  "background": {
-    "service_worker": "background.js"
-  }
+  ]
 }

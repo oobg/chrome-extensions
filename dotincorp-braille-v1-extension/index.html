@@ -9,7 +9,7 @@
 	<style>
 		body {
 			width: 300px;
-			height: 300px;
+			height: 100%;
 		}
 		.flex-row {
 			display: flex;
@@ -25,16 +25,32 @@
 		.flex-1 {
 			flex: 1;
 		}
+		.justify-center {
+			justify-content: center;
+		}
+		.align-center {
+			align-items: center;
+		}
+		div:has(textarea) {
+			height: 400px;
+		}
 		textarea {
 			resize: none;
 			height: 100%;
+			overflow: auto;
+		}
+		img {
+			object-fit: contain;
 		}
 	</style>
 </head>
 
 <body>
 	<div class="flex-col gap-1">
-		<h1>점역</h1>
+		<div class="flex-row gap-1 align-center">
+<!--			<img src="dot-logo.png" alt="Dot Logo" width="90" />-->
+			<h1>Braille Extension</h1>
+		</div>
 		<div class="flex-row">
 			<div class="flex-col">
 				<div>API 서버</div>
@@ -58,6 +74,7 @@
 				<label for="language">점역 언어</label>
 				<select id="language">
 					<option value="english">영어</option>
+					<option value="korean">한국어</option>
 				</select>
 			</div>
 			<div class="flex-col flex-1">
@@ -65,6 +82,13 @@
 				<select id="grade">
 					<option value="1">Grade 1</option>
 					<option value="2">Grade 2</option>
+				</select>
+			</div>
+			<div class="flex-col flex-1">
+				<label for="pin">점역 PIN</label>
+				<select id="pin">
+					<option value="6">6 PIN</option>
+					<option value="8">8 PIN</option>
 				</select>
 			</div>
 		</div>
@@ -76,8 +100,12 @@
 			</div>
 		</div>
 		<div class="flex-col">
-			<label for="response-text">점역 응답 문구</label>
-			<textarea id="response-text" class="flex-1" readonly></textarea>
+			<label for="response-hex">점역 응답 헥사값</label>
+			<textarea id="response-hex" class="flex-1" readonly></textarea>
+		</div>
+		<div class="flex-col">
+			<label for="response-unicode">점역 응답 유니코드</label>
+			<textarea id="response-unicode" class="flex-1" readonly></textarea>
 		</div>
 	</div>
 	<script src="braille-api.js" defer></script>
