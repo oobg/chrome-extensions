@@ -1,0 +1,24 @@
+{
+  "name": "braille-translator",
+  "description": "Use Dotincorp braille-app API",
+  "version": "0.1",
+  "manifest_version": 3,
+  "action": {
+    "default_popup": "index.html"
+  },
+  "icons": {
+    "60": "icon.png"
+  },
+  "permissions": [
+    "storage",
+    "declarativeNetRequest",
+    "declarativeNetRequestWithHostAccess"
+  ],
+  "host_permissions": [
+    "https://dev-apps.dotincorp.com/*",
+    "https://apps-dotincorp.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  }
+}

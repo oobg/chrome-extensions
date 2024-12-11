@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<style>
+		body {
+			width: 300px;
+			height: 300px;
+		}
+		.flex-row {
+			display: flex;
+			flex-direction: row;
+		}
+		.flex-col {
+			display: flex;
+			flex-direction: column;
+		}
+		.gap-1 {
+			gap: 1em;
+		}
+		.flex-1 {
+			flex: 1;
+		}
+		textarea {
+			resize: none;
+			height: 100%;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="flex-col gap-1">
+		<h1>점역</h1>
+		<div class="flex-row">
+			<div class="flex-col">
+				<div>API 서버</div>
+				<select id="api-server" aria-label="API 서버">
+					<option value="https://apps-dotincorp.com">Production</option>
+					<option value="https://dev-apps.dotincorp.com">Development</option>
+				</select>
+			</div>
+			<div class="flex-1"></div>
+		</div>
+		<div class="flex-row gap-1">
+			<div class="flex-col flex-1">
+				<label for="engine">점역 엔진</label>
+				<select id="engine">
+					<option value="dot">Dot</option>
+					<option value="liblouis">Liblouis</option>
+					<option value="amedia">Amedia</option>
+				</select>
+			</div>
+			<div class="flex-col flex-1">
+				<label for="language">점역 언어</label>
+				<select id="language">
+					<option value="english">영어</option>
+				</select>
+			</div>
+			<div class="flex-col flex-1">
+				<label for="grade">점역 등급</label>
+				<select id="grade">
+					<option value="1">Grade 1</option>
+					<option value="2">Grade 2</option>
+				</select>
+			</div>
+		</div>
+		<div class="flex-col">
+			<label for="request-text">점역 요청 문구</label>
+			<div class="flex-row gap-1">
+				<input type="text" name="점역 할 문구" placeholder="점역 할 문구 입력하기" id="request-text" class="flex-1" />
+				<button id="request-button">점역 요청</button>
+			</div>
+		</div>
+		<div class="flex-col">
+			<label for="response-text">점역 응답 문구</label>
+			<textarea id="response-text" class="flex-1" readonly></textarea>
+		</div>
+	</div>
+	<script src="braille-api.js" defer></script>
+</body>
+
+</html>
