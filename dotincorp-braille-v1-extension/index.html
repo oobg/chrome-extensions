@@ -72,11 +72,11 @@
 		</div>
 		<div class="flex-col">
 			<label for="response-hex">점역 응답 헥사값</label>
-			<textarea id="response-hex" class="flex-1" readonly></textarea>
+			<div id="response-hex" class="flex-1 editable" contenteditable="true"></div>
 		</div>
 		<div class="flex-col">
-			<label for="response-unicode">점역 응답 유니코드</label>
-			<textarea id="response-unicode" class="flex-1" readonly></textarea>
+			<label for="response-unicode">점역 응답 유니코드 (6핀까지만 지원)</label>
+			<div id="response-unicode" class="flex-1 editable" contenteditable="true"></div>
 		</div>
 	</div>
 	<script src="braille-api.js" defer></script>

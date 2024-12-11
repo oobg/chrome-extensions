@@ -36,3 +36,29 @@ textarea {
 img {
 	object-fit: contain;
 }
+
+.editable {
+	border: 1px solid #ccc; /* 테두리 추가 */
+	padding: 8px;
+	overflow-y: auto;
+	min-height: 100px;
+	white-space: pre-wrap; /* 줄 바꿈 유지 */
+	word-wrap: break-word; /* 긴 단어 줄 바꿈 */
+	font-family: Arial, sans-serif; /* 폰트 설정 */
+	font-size: 14px; /* 기본 글꼴 크기 */
+	background-color: #f9f9f9; /* 읽기 편한 배경색 */
+	resize: none; /* 크기 조절 불가 */
+
+	caret-color: transparent; /* 커서 숨기기 */
+	user-select: text;    /* 텍스트 선택은 허용 */
+}
+
+.editable * {
+	border: solid 1px black;
+}
+
+.editable mark {
+	background-color: lightskyblue;
+	color: black;
+	border: solid 1px black;
+}

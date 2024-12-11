@@ -20,6 +20,38 @@ const loadSettings = async () => {
 	});
 };
 
+const setReadOnly = (element) => {
+	// 키 입력 방지
+	element.addEventListener('keydown', (event) => {
+		event.preventDefault();
+	});
+
+	// 붙여넣기 방지
+	element.addEventListener('paste', (event) => {
+		event.preventDefault();
+	});
+
+	// 드래그 앤 드롭 방지
+	element.addEventListener('drop', (event) => {
+		event.preventDefault();
+	});
+
+	// 조합 입력 시작 방지
+	element.addEventListener('compositionstart', (event) => {
+		event.preventDefault();
+	});
+
+	// 조합 입력 중 방지
+	element.addEventListener('compositionupdate', (event) => {
+		event.preventDefault();
+	});
+
+	// 조합 입력 완료 방지
+	element.addEventListener('compositionend', (event) => {
+		event.preventDefault();
+	});
+};
+
 const makeUri = (engine) => {
 	switch (engine) {
 		case "dot":
@@ -67,7 +99,11 @@ const hexToBrailleUnicode = (hex) => {
 	const hexArray = hex.split(' ');
 	const brailleArray = hexArray.map((hex) => {
 		const braille = String.fromCodePoint(parseInt(hex, 16) + 0x2800);
-		return braille;
+		if (braille === '⠀') {
+			return `<mark>${braille}</mark>`;
+		} else {
+			return `<span>${braille}</span>`;
+		}
 	});
 
 	return brailleArray.join('');
@@ -89,13 +125,23 @@ const fetchBraille = async () => {
 			throw new Error('API 요청 실패: ' + response.errors[0].msg);
 		}
 
-		document.getElementById('response-hex').value = data.BRAILLE_RESULT;
-		document.getElementById('response-unicode').value = hexToBrailleUnicode(data.BRAILLE_RESULT);
+		const hexTextArea = document.getElementById('response-hex');
+		const unicodeTextArea = document.getElementById('response-unicode');
+
+		hexTextArea.textContent = data.BRAILLE_RESULT;
+		unicodeTextArea.innerHTML = hexToBrailleUnicode(data.BRAILLE_RESULT);
 	} catch (error) {
 		console.error('API 요청 오류:', error);
 		alert('API 요청 중 오류가 발생했습니다. 콘솔을 확인하세요.');
 	}
 };
+
+const onEnterFetchBraille = (event) => {
+	if (event.key === 'Enter') {
+		event.preventDefault();
+		fetchBraille();
+	}
+}
 
 document.getElementById("api-server").onchange = saveSettings;
 document.getElementById("engine").onchange = saveSettings;
@@ -116,7 +162,11 @@ window.addEventListener("DOMContentLoaded", async () => {
 	document.getElementById('language').value = language;
 	document.getElementById('grade').value = grade;
 	document.getElementById('pin').value = pin;
+
+	// 읽기 전용 설정
+	setReadOnly(document.getElementById('response-hex'));
+	setReadOnly(document.getElementById('response-unicode'));
 });
 
-document.getElementById('request-text').onenter = fetchBraille;
+document.getElementById('request-text').onkeydown = onEnterFetchBraille;
 document.getElementById('request-button').onclick = fetchBraille;
