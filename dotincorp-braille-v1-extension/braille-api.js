@@ -22,12 +22,13 @@ const loadSettings = async () => {
 
 const makeUri = (engine) => {
 	switch (engine) {
+		case "dot":
+			return "/braille-app/v1/braille/translation-console";
 		case "liblouis":
 			return "/braille-app/v1/braille/translation-liblouis";
 		case "amedia":
 			return "/braille-amedia-app/v1/braille/translation-console";
-		case "dot":
-		default :
+		default:
 			return "/braille-app/v1/braille/translation-console";
 	}
 }
@@ -62,6 +63,16 @@ const makeFetchData = async () => {
 	return { url, body };
 }
 
+const hexToBrailleUnicode = (hex) => {
+	const hexArray = hex.split(' ');
+	const brailleArray = hexArray.map((hex) => {
+		const braille = String.fromCodePoint(parseInt(hex, 16) + 0x2800);
+		return braille;
+	});
+
+	return brailleArray.join('');
+}
+
 const fetchBraille = async () => {
 	const { url, body } = await makeFetchData();
 
@@ -78,7 +89,8 @@ const fetchBraille = async () => {
 			throw new Error('API 요청 실패: ' + response.errors[0].msg);
 		}
 
-		document.getElementById('response-hex').value = data.BRAILLE_RESULT || data.result + ", 점자 변환 실패!";
+		document.getElementById('response-hex').value = data.BRAILLE_RESULT;
+		document.getElementById('response-unicode').value = hexToBrailleUnicode(data.BRAILLE_RESULT);
 	} catch (error) {
 		console.error('API 요청 오류:', error);
 		alert('API 요청 중 오류가 발생했습니다. 콘솔을 확인하세요.');

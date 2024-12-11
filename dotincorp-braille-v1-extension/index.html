@@ -39,6 +39,9 @@
 			height: 100%;
 			overflow: auto;
 		}
+		#response-unicode {
+			font-size: xx-large;
+		}
 		img {
 			object-fit: contain;
 		}
@@ -55,8 +58,8 @@
 			<div class="flex-col">
 				<div>API 서버</div>
 				<select id="api-server" aria-label="API 서버">
-					<option value="https://apps-dotincorp.com">Production</option>
-					<option value="https://dev-apps.dotincorp.com">Development</option>
+					<option value="https://apps-dotincorp.com">운영 서버</option>
+					<option value="https://dev-apps.dotincorp.com">개발 서버</option>
 				</select>
 			</div>
 			<div class="flex-1"></div>
@@ -65,9 +68,9 @@
 			<div class="flex-col flex-1">
 				<label for="engine">점역 엔진</label>
 				<select id="engine">
-					<option value="dot">Dot</option>
-					<option value="liblouis">Liblouis</option>
-					<option value="amedia">Amedia</option>
+					<option value="dot">닷</option>
+					<option value="liblouis">리블루이스</option>
+					<option value="amedia">아메디아</option>
 				</select>
 			</div>
 			<div class="flex-col flex-1">
@@ -95,7 +98,14 @@
 		<div class="flex-col">
 			<label for="request-text">점역 요청 문구</label>
 			<div class="flex-row gap-1">
-				<input type="text" name="점역 할 문구" placeholder="점역 할 문구 입력하기" id="request-text" class="flex-1" />
+				<input
+					type="text"
+					name="점역 할 문구"
+					placeholder="점역 할 문구 입력하기"
+					id="request-text"
+					class="flex-1"
+					value="안녕하세요"
+				/>
 				<button id="request-button">점역 요청</button>
 			</div>
 		</div>
