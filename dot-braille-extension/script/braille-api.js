@@ -20,8 +20,8 @@ const makeFetchData = async () => {
 	const text = document.getElementById('request-text').value;
 
 	if (!text) {
-		const NO_TEXT = "점역할 문구를 입력하세요.";
-		document.getElementById('response-hex').value = NO_TEXT;
+		const NO_TEXT = "점역할 문구를 입력하고 다시 요청하세요.";
+		document.getElementById('response-hex').innerHTML = NO_TEXT;
 		throw new Error(NO_TEXT);
 		return;
 	}
@@ -85,7 +85,9 @@ const fetchBraille = async () => {
 		const data = await response.json();
 
 		if (data.result !== true) {
-			throw new Error('API 요청 실패: ' + response.errors[0].msg);
+			const FAIL_TEXT = 'API 요청 실패: ' + response.errors[0].msg;
+			document.getElementById('response-hex').innerHTML = FAIL_TEXT;
+			throw new Error(FAIL_TEXT);
 		}
 
 		const hexTextArea = document.getElementById('response-hex');
