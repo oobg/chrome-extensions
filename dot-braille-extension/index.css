@@ -1,64 +1,144 @@
-body {
-	width: 300px;
-	height: 100%;
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
 }
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f0f2f5;
+  padding: 10px;
+	width:  500px;
+  margin: auto;
+}
+
+h1 {
+	font-size: 2em;
+	color: #333;
+	text-align: center;
+	margin-bottom: 1em;
+}
+
+.container {
+	background: white;
+	padding: 20px;
+	border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
 .flex-row {
 	display: flex;
-	flex-direction: row;
+  gap: 1.5em;
+  margin-bottom: 1.5em;
 }
+
 .flex-col {
-	display: flex;
-	flex-direction: column;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7em;
+  flex: 1;
 }
-.gap-1 {
-	gap: 1em;
+
+label {
+  font-weight: 600;
+  color: #333;
+  font-size: 0.9em;
 }
-.flex-1 {
-	flex: 1;
+
+select, input[type="text"], button {
+  padding: 5px 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 1em;
+  transition: all 0.3s ease;
 }
-.justify-center {
-	justify-content: center;
+
+select {
+  width: 100%;
+  appearance: none;
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="6"><path d="M0 0h12L6 6z" fill="%23333"/></svg>') no-repeat right 10px center/10px;
+  padding-right: 20px;
 }
-.align-center {
-	align-items: center;
+
+select:focus, input[type="text"]:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
 }
-div:has(textarea) {
-	height: 400px;
+
+button {
+	margin-top: -5px;
+	margin-bottom: 5px;
+  background: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.1s;
+  font-weight: 600;
 }
-textarea {
-	resize: none;
-	height: 100%;
-	overflow: auto;
+
+button:hover {
+  background: #0056b3;
+  transform: translateY(-2px);
 }
-#response-unicode {
-	font-size: xx-large;
+
+select:hover, input[type="text"]:hover {
+  border-color: #007bff;
 }
-img {
-	object-fit: contain;
+
+button:active {
+  transform: translateY(0);
+}
+
+.editableText {
+  padding: 5px;
+  border: 1px solid #ddd;
+  background: #f9f9f9;
+  min-height: 120px;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 12px;
+  border-radius: 6px;
+  transition: border-color 0.3s;
 }
 
 .editable {
-	border: 1px solid #ccc; /* 테두리 추가 */
-	padding: 8px;
-	overflow-y: auto;
-	min-height: 100px;
-	white-space: pre-wrap; /* 줄 바꿈 유지 */
-	word-wrap: break-word; /* 긴 단어 줄 바꿈 */
-	font-family: Arial, sans-serif; /* 폰트 설정 */
-	font-size: 14px; /* 기본 글꼴 크기 */
-	background-color: #f9f9f9; /* 읽기 편한 배경색 */
-	resize: none; /* 크기 조절 불가 */
+  padding: 15px;
+  border: 1px solid #ddd;
+  background: #f9f9f9;
+  min-height: 120px;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 16px;
+  border-radius: 6px;
+  transition: border-color 0.3s;
+}
 
-	caret-color: transparent; /* 커서 숨기기 */
-	user-select: text;    /* 텍스트 선택은 허용 */
+.editable:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
 }
 
 .editable * {
-	border: solid 1px black;
+	border: solid 1px #ccc;
+	width: 1em;
+	display: inline-block;
 }
 
 .editable mark {
-	background-color: lightskyblue;
-	color: black;
-	border: solid 1px black;
+  background-color: #e6f2ff;
+  color: #333;
+  border: solid 1px #007bff;
+}
+
+
+img {
+	width: 90px;
+	margin: auto;
+	display: block;
 }

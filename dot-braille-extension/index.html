@@ -10,75 +10,88 @@
 </head>
 
 <body>
-	<div class="flex-col gap-1">
-		<div class="flex-row gap-1 align-center">
-<!--			<img src="dot-logo.png" alt="Dot Logo" width="90" />-->
-			<h1>Braille Extension</h1>
-		</div>
-		<div class="flex-row">
-			<div class="flex-col">
-				<div>API 서버</div>
-				<select id="api-server" aria-label="API 서버">
-					<option value="https://apps-dotincorp.com">운영 서버</option>
-					<option value="https://dev-apps.dotincorp.com">개발 서버</option>
-				</select>
-			</div>
-			<div class="flex-1"></div>
-		</div>
-		<div class="flex-row gap-1">
-			<div class="flex-col flex-1">
-				<label for="engine">점역 엔진</label>
-				<select id="engine">
-					<option value="dot">닷</option>
-					<option value="liblouis">리블루이스</option>
-					<option value="amedia">아메디아</option>
-				</select>
-			</div>
-			<div class="flex-col flex-1">
-				<label for="language">점역 언어</label>
+  <div class="container">
+    <div class="flex-row">
+      <div class="flex-col">
+        <label for="api-server">API 서버</label>
+        <select id="api-server" aria-label="API 서버">
+          <option value="https://apps-dotincorp.com">운영 서버</option>
+          <option value="https://dev-apps.dotincorp.com">개발 서버</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="flex-row">
+      <div class="flex-col">
+        <label for="engine">점역 엔진</label>
+        <select id="engine">
+          <option value="dot">닷</option>
+          <option value="liblouis">리블루이스</option>
+        </select>
+      </div>
+      <div class="flex-col">
+        <label for="language">점역 언어</label>
 				<select id="language">
-					<option value="english">영어</option>
 					<option value="korean">한국어</option>
-				</select>
-			</div>
-			<div class="flex-col flex-1">
-				<label for="grade">점역 등급</label>
-				<select id="grade">
-					<option value="1">Grade 1</option>
-					<option value="2">Grade 2</option>
-				</select>
-			</div>
-			<div class="flex-col flex-1">
-				<label for="pin">점역 PIN</label>
-				<select id="pin">
-					<option value="6">6 PIN</option>
-					<option value="8">8 PIN</option>
-				</select>
-			</div>
-		</div>
+					<option value="english">영어</option>
+					<option value="japanese">일본어</option>
+					<option value="chinese">중국어</option>
+					<option value="spanish">스페인어</option>
+					<option value="french">프랑스어</option>
+					<option value="german">독일어</option>
+					<option value="russian">러시아어</option>
+					<option value="arabic">아랍어</option>
+					<option value="portuguese">포르투갈어</option>
+					<option value="italian">이탈리아어</option>
+					<option value="vietnamese">베트남어</option>
+					<option value="thai">태국어</option>
+					<option value="polish">폴란드어</option>
+					<option value="dutch">네덜란드어</option>
+					<option value="swedish">스웨덴어</option>
+					<option value="danish">덴마크어</option>
+					<option value="norwegian">노르웨이어</option>
+					<option value="greek">그리스어</option>
+					<option value="turkish">터키어</option>
+					<option value="czech">체코어</option>
+					<option value="hungarian">헝가리어</option>
+					<option value="finnish">핀란드어</option>
+					<option value="catalan">카탈루냐어</option>
+					</select>
+      </div>
+      <div class="flex-col">
+        <label for="grade">점역 등급</label>
+        <select id="grade">
+          <option value="1">Grade 1</option>
+          <option value="2">Grade 2</option>
+        </select>
+      </div>
 		<div class="flex-col">
-			<label for="request-text">점역 요청 문구</label>
-			<div class="flex-row gap-1">
-				<input
-					type="text"
-					name="점역 할 문구"
-					placeholder="점역 할 문구 입력하기"
-					id="request-text"
-					class="flex-1"
-					value="안녕하세요"
-				/>
-				<button id="request-button">점역 요청</button>
-			</div>
+			<label for="cell">셀</label>
+			<select id="cell">
+				<option value="20" selected>20</option>
+				<option value="8">8</option>
+				<option value="12">12</option>
+				<option value="30">30</option>
+			</select>
 		</div>
-		<div class="flex-col">
-			<label for="response-hex">점역 응답 헥사값</label>
-			<div id="response-hex" class="flex-1 editable" contenteditable="true"></div>
-		</div>
-		<div class="flex-col">
-			<label for="response-unicode">점역 응답 유니코드 (6핀까지만 지원)</label>
-			<div id="response-unicode" class="flex-1 editable" contenteditable="true"></div>
-		</div>
-	</div>
+      </div>
+
+      <div class="flex-col">
+          <label for="request-text">점역 요청 문구</label>
+          <input type="text" id="request-text" placeholder="점역 할 문구 입력하기">
+          <button id="request-button">점역 요청</button>
+      </div>
+
+      <div class="flex-col">
+          <label for="response-hex">점역 응답 헥사값</label>
+          <div id="response-hex" class="editableText" contenteditable="false"></div>
+      </div>
+
+      <div class="flex-col">
+          <label for="response-unicode">점역 응답 유니코드</label>
+          <div id="response-unicode" class="editable" contenteditable="false"></div>
+      </div>
+  </div>
 	<script src="braille-api.js" defer></script>
 </body>
 

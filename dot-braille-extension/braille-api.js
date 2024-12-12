@@ -5,21 +5,38 @@ const saveSettings = () => {
 	const engine = getIdValue('engine');
 	const language = getIdValue('language');
 	const grade = getIdValue('grade');
-	const pin = getIdValue('pin');
+  const cell = getIdValue('cell');
 
-	chrome.storage.sync.set({ apiServer, engine, language, grade, pin }, () => {
-		console.log('Settings saved!');
-	});
+	
+  // Check if chrome.storage is available
+  if (chrome && chrome.storage && chrome.storage.sync) {
+    chrome.storage.sync.set({ apiServer, engine, language, grade, cell }, () => {
+      console.log('Settings saved!');
+    });
+  } else {
+    // Fallback to localStorage
+    localStorage.setItem('apiServer', apiServer);
+    localStorage.setItem('engine', engine);
+    localStorage.setItem('language', language);
+    localStorage.setItem('grade', grade);
+    localStorage.setItem('cellWidth', cell);
+    console.log('Settings saved to localStorage');
+  }
 };
 
 const loadSettings = async () => {
-	return new Promise(async (resolve) => {
-		chrome.storage.sync.get(['apiServer', 'engine', 'language', 'grade', 'pin'], (settings) => {
-			resolve(settings);
-		});
-	});
+  return new Promise((resolve) => {
+    chrome.storage.sync.get([
+      'apiServer',
+      'engine',
+      'language',
+      'grade',
+      'cell'
+    ], (settings) => {
+      resolve(settings);
+    });
+  });
 };
-
 const setReadOnly = (element) => {
 	// 키 입력 방지
 	element.addEventListener('keydown', (event) => {
@@ -58,8 +75,6 @@ const makeUri = (engine) => {
 			return "/braille-app/v1/braille/translation-console";
 		case "liblouis":
 			return "/braille-app/v1/braille/translation-liblouis";
-		case "amedia":
-			return "/braille-amedia-app/v1/braille/translation-console";
 		default:
 			return "/braille-app/v1/braille/translation-console";
 	}
@@ -71,7 +86,7 @@ const makeFetchData = async () => {
 	const engine = settings.engine || getIdValue('engine');
 	const language = settings.language || getIdValue('language');
 	const grade = settings.grade || getIdValue('grade');
-	const pin = settings.pin || getIdValue('pin');
+  const cell = settings.cell || getIdValue('cell');
 
 	const text = document.getElementById('request-text').value;
 
@@ -84,8 +99,8 @@ const makeFetchData = async () => {
 
 	const url = `${apiServer}${makeUri(engine)}`;
 	const body = {
-		"CELL": "20",
-		"PIN": pin,
+		"CELL": cell,
+		"PIN": 6,
 		"TEXT": text,
 		"LANGUAGE": language,
 		"OPTION": grade,
@@ -95,22 +110,41 @@ const makeFetchData = async () => {
 	return { url, body };
 }
 
-const hexToBrailleUnicode = (hex) => {
-	const hexArray = hex.split(' ');
-	const brailleArray = hexArray.map((hex) => {
-		const braille = String.fromCodePoint(parseInt(hex, 16) + 0x2800);
-		if (braille === '⠀') {
-			return `<mark>${braille}</mark>`;
-		} else {
-			return `<span>${braille}</span>`;
-		}
-	});
+const hexToText = (hex, cell) => {
+  const hexArray = hex.split(' ');
+  const lines = [];
 
-	return brailleArray.join('');
+  for (let i = 0; i < hexArray.length; i += cell) {
+    const lineHex = hexArray.slice(i, i + cell);
+    lines.push(lineHex.join(' '));
+  }
+
+  return lines.join('<br>');
+};
+
+const hexToBrailleUnicode = (hex, cell) => {
+  const hexArray = hex.split(' ');
+
+  const lines = [];
+  for (let i = 0; i < hexArray.length; i += cell) {
+    const lineHex = hexArray.slice(i, i + cell);
+    const brailleLine = lineHex.map((hex) => {
+      const braille = String.fromCodePoint(parseInt(hex, 16) + 0x2800);
+      if (braille === '⠀') {
+        return `<mark>${braille}</mark>`;
+      } else {
+        return `<span>${braille}</span>`;
+      }
+    }).join('');
+    lines.push(brailleLine);
+  }
+
+  return lines.join('<br>');
 }
 
 const fetchBraille = async () => {
 	const { url, body } = await makeFetchData();
+  const cell = getIdValue('cell');
 
 	try {
 		const response = await fetch(url, {
@@ -128,8 +162,8 @@ const fetchBraille = async () => {
 		const hexTextArea = document.getElementById('response-hex');
 		const unicodeTextArea = document.getElementById('response-unicode');
 
-		hexTextArea.textContent = data.BRAILLE_RESULT;
-		unicodeTextArea.innerHTML = hexToBrailleUnicode(data.BRAILLE_RESULT);
+		hexTextArea.innerHTML = hexToText(data.BRAILLE_RESULT, parseInt(cell));
+		unicodeTextArea.innerHTML = hexToBrailleUnicode(data.BRAILLE_RESULT, parseInt(cell));
 	} catch (error) {
 		console.error('API 요청 오류:', error);
 		alert('API 요청 중 오류가 발생했습니다. 콘솔을 확인하세요.');
@@ -143,11 +177,12 @@ const onEnterFetchBraille = (event) => {
 	}
 }
 
+// 이벤트 핸들러 등록
 document.getElementById("api-server").onchange = saveSettings;
 document.getElementById("engine").onchange = saveSettings;
 document.getElementById("language").onchange = saveSettings;
 document.getElementById("grade").onchange = saveSettings;
-document.getElementById("pin").onchange = saveSettings;
+document.getElementById("cell").onchange = saveSettings;
 
 window.addEventListener("DOMContentLoaded", async () => {
 	const settings = await loadSettings();
@@ -155,13 +190,13 @@ window.addEventListener("DOMContentLoaded", async () => {
 	const engine = settings.engine || getIdValue('engine');
 	const language = settings.language || getIdValue('language');
 	const grade = settings.grade || getIdValue('grade');
-	const pin = settings.pin || getIdValue('pin');
+  const cell = settings.cell || getIdValue('cell');
 
 	document.getElementById('api-server').value = apiServer;
 	document.getElementById('engine').value = engine;
 	document.getElementById('language').value = language;
 	document.getElementById('grade').value = grade;
-	document.getElementById('pin').value = pin;
+  document.getElementById('cell').value = cell;
 
 	// 읽기 전용 설정
 	setReadOnly(document.getElementById('response-hex'));

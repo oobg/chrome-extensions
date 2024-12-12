@@ -1,7 +1,7 @@
 {
   "name": "braille-translator",
   "description": "Use Dotincorp braille-app API",
-  "version": "0.1",
+  "version": "0.2",
   "manifest_version": 3,
   "action": {
     "default_popup": "index.html"
