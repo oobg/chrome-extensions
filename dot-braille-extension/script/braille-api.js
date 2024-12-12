@@ -45,7 +45,14 @@ const hexToText = (hex, cell) => {
 
   for (let i = 0; i < hexArray.length; i += cell) {
     const lineHex = hexArray.slice(i, i + cell);
-    lines.push(lineHex.join(' '));
+		const hexWrap = lineHex.map((hex) => {
+			if (hex === "00") {
+				return `<mark>${hex}</mark>`;
+			} else {
+				return `<span>${hex}</span>`;
+			}
+		}).join("");
+    lines.push(hexWrap);
   }
 
   return lines.join('<br>');

@@ -12,30 +12,26 @@ body {
   margin: auto;
 }
 
-h1 {
-	font-size: 2em;
-	color: #333;
-	text-align: center;
-	margin-bottom: 1em;
-}
-
 .container {
 	background: white;
 	padding: 20px;
 	border-radius: 12px;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+
+	display: flex;
+	flex-direction: column;
+	gap: 1em;
 }
 
 .flex-row {
 	display: flex;
-  gap: 1.5em;
-  margin-bottom: 1.5em;
+  gap: 0.5em;
 }
 
 .flex-col {
   display: flex;
   flex-direction: column;
-  gap: 0.7em;
+  gap: 0.5em;
   flex: 1;
 }
 
@@ -67,8 +63,6 @@ select:focus, input[type="text"]:focus {
 }
 
 button {
-	margin-top: -5px;
-	margin-bottom: 5px;
   background: #007bff;
   color: white;
   border: none;
@@ -99,13 +93,13 @@ button:active {
   white-space: pre-wrap;
   word-wrap: break-word;
   font-family: 'Courier New', Courier, monospace;
-  font-size: 12px;
+  font-size: 16px;
   border-radius: 6px;
   transition: border-color 0.3s;
 }
 
 .editable {
-  padding: 15px;
+  padding: 5px;
   border: 1px solid #ddd;
   background: #f9f9f9;
   min-height: 120px;
@@ -113,7 +107,7 @@ button:active {
   white-space: pre-wrap;
   word-wrap: break-word;
   font-family: 'Courier New', Courier, monospace;
-  font-size: 16px;
+  font-size: 21px;
   border-radius: 6px;
   transition: border-color 0.3s;
 }
@@ -124,12 +118,23 @@ button:active {
   box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
 }
 
+.editableText *,
 .editable * {
 	border: solid 1px #ccc;
-	width: 1em;
 	display: inline-block;
 }
 
+.editableText * {
+	height: 1.7em;
+	line-height: 1.7em;
+	text-align: center;
+}
+
+.editable * {
+	width: 1em;
+}
+
+.editableText mark,
 .editable mark {
   background-color: #e6f2ff;
   color: #333;
