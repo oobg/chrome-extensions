@@ -1,7 +1,7 @@
 {
   "name": "braille-translator",
   "description": "Use Dotincorp braille-app API",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "manifest_version": 3,
   "action": {
     "default_popup": "index.html"
@@ -12,10 +12,24 @@
   "permissions": [
     "storage",
     "declarativeNetRequest",
-    "declarativeNetRequestWithHostAccess"
+    "declarativeNetRequestWithHostAccess",
+    "activeTab",
+    "scripting"
   ],
   "host_permissions": [
     "https://dev-apps.dotincorp.com/*",
     "https://apps-dotincorp.com/*"
-  ]
+  ],
+  "background": {
+    "service_worker": "script/background.js"
+  },
+  "commands": {
+    "block-braille-translation": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+U",
+        "mac": "Command+Shift+U"
+      },
+      "description": "Block braille translation requests"
+    }
+  }
 }
