@@ -24,6 +24,7 @@
 			  background: white;
 				padding: 20px;
 				border-radius: 12px;
+				border: 1px solid #dddd;
 			  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
 			  			
 				/*display: flex;*/
@@ -206,6 +207,7 @@
 			const text = getSelectedText();
 			showPopup();
 			console.log("Selected text:", text);
+			shadow.getElementById("response-hex").textContent = text;
 
 			// TODO: 실행 컨텍스트가 달라서 fetchBraille 함수를 사용할 수 없음
 			// const fetchBraille = window.fetchBraille;
