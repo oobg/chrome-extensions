@@ -12,10 +12,24 @@
   "permissions": [
     "storage",
     "declarativeNetRequest",
-    "declarativeNetRequestWithHostAccess"
+    "declarativeNetRequestWithHostAccess",
+    "activeTab",
+    "scripting"
   ],
   "host_permissions": [
     "https://dev-apps.dotincorp.com/*",
     "https://apps-dotincorp.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["script/content.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["script/braille-api.js"],
+      "matches": ["<all_urls>"]
+    }
   ]
 }

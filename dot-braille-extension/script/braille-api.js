@@ -9,7 +9,7 @@ const makeUri = (engine) => {
 	}
 }
 
-const makeFetchData = async () => {
+const makeFetchData = async (text) => {
 	const settings = await loadSettings();
 	const apiServer = settings.apiServer || getIdValue('api-server');
 	const engine = settings.engine || getIdValue('engine');
@@ -17,7 +17,7 @@ const makeFetchData = async () => {
 	const grade = settings.grade || getIdValue('grade');
   const cell = settings.cell || getIdValue('cell');
 
-	const text = document.getElementById('request-text').value;
+	text = text ?? document.getElementById('request-text').value;
 
 	if (!text) {
 		const NO_TEXT = "점역할 문구를 입력하고 다시 요청하세요.";
@@ -78,9 +78,11 @@ const hexToBrailleUnicode = (hex, cell) => {
   return lines.join('<br>');
 }
 
-const fetchBraille = async () => {
-	const { url, body } = await makeFetchData();
+const fetchBraille = async (text) => {
+	const { url, body } = await makeFetchData(text);
   const cell = getIdValue('cell');
+
+	console.log(url, body, cell)
 
 	try {
 		const response = await fetch(url, {
@@ -100,10 +102,17 @@ const fetchBraille = async () => {
 		const hexTextArea = document.getElementById('response-hex');
 		const unicodeTextArea = document.getElementById('response-unicode');
 
-		hexTextArea.innerHTML = hexToText(data.BRAILLE_RESULT, parseInt(cell));
-		unicodeTextArea.innerHTML = hexToBrailleUnicode(data.BRAILLE_RESULT, parseInt(cell));
+		const hex = hexToText(data.BRAILLE_RESULT, parseInt(cell));
+		const unicode = hexToBrailleUnicode(data.BRAILLE_RESULT, parseInt(cell));
+
+		hexTextArea.innerHTML = hex;
+		unicodeTextArea.innerHTML = unicode;
+
+		return { hex, unicode };
 	} catch (error) {
 		console.error('API 요청 오류:', error);
 		alert('API 요청 중 오류가 발생했습니다. 콘솔을 확인하세요.');
 	}
 };
+
+window.fetchBraille = fetchBraille;
