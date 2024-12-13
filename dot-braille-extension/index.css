@@ -84,20 +84,7 @@ button:active {
   transform: translateY(0);
 }
 
-.editableText {
-  padding: 5px;
-  border: 1px solid #ddd;
-  background: #f9f9f9;
-  min-height: 120px;
-  overflow-y: auto;
-  white-space: pre-wrap;
-  word-wrap: break-word;
-  font-family: 'Courier New', Courier, monospace;
-  font-size: 16px;
-  border-radius: 6px;
-  transition: border-color 0.3s;
-}
-
+.editableText,
 .editable {
   padding: 5px;
   border: 1px solid #ddd;
@@ -110,6 +97,10 @@ button:active {
   font-size: 21px;
   border-radius: 6px;
   transition: border-color 0.3s;
+}
+
+.editableText {
+	font-size: 16px;
 }
 
 .editable:focus {
@@ -137,13 +128,20 @@ button:active {
 .editableText mark,
 .editable mark {
   background-color: #e6f2ff;
-  color: #333;
+  color: #000;
   border: solid 1px #007bff;
 }
 
+.editableText *::selection,
+.editable *::selection {
+	background-color: transparent;
+}
 
-img {
-	width: 90px;
-	margin: auto;
-	display: block;
+span.highlighted {
+	background-color: #EA5414;
+	color: white;
+}
+
+mark.highlighted {
+	background-color: rgba(234, 84, 20, 0.3);
 }

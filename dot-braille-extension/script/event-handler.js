@@ -65,3 +65,76 @@ window.addEventListener("DOMContentLoaded", async () => {
 
 document.getElementById('request-text').onkeydown = onEnterFetchBraille;
 document.getElementById('request-button').onclick = fetchBraille;
+
+// 선택 영역 동기화 함수
+const syncSelectionHighlight = (sourceId, targetId) => {
+	const source = document.getElementById(sourceId);
+	const target = document.getElementById(targetId);
+	const selector = "span, mark";
+	const highlightedClass = "highlighted";
+	const highlightedSelector = selector
+		.split(", ")
+		.map((tag) => `${tag}.${highlightedClass}`)
+		.join(", ");
+
+	if (!source || !target) return;
+
+	// 기존 선택된 영역 초기화
+	const clearSelection = (element) => {
+		const tags = element.querySelectorAll(highlightedSelector);
+		tags.forEach((tag) => tag.classList.remove(highlightedClass));
+	};
+
+	// 선택된 영역 강조
+	const highlightSelection = (element, startIndex, endIndex) => {
+		const tags = element.querySelectorAll(selector);
+		for (let i = startIndex; i < endIndex; i++) {
+			tags[i]?.classList.add(highlightedClass);
+		}
+	};
+
+	// 마우스 움직임 중 선택 동기화
+	const syncHighlight = () => {
+		const selection = window.getSelection();
+		if (!selection.rangeCount) return;
+
+		const range = selection.getRangeAt(0);
+
+		// 선택 범위의 상위 요소와 오프셋 계산
+		const startContainer = range.startContainer;
+		const endContainer = range.endContainer;
+
+		// 상위 요소의 인덱스 및 오프셋을 계산
+		const startElement = startContainer.nodeType === Node.TEXT_NODE ? startContainer.parentElement : startContainer;
+		const endElement = endContainer.nodeType === Node.TEXT_NODE ? endContainer.parentElement : endContainer;
+
+		const startIndex = Array.from(source.querySelectorAll(selector)).indexOf(startElement);
+		const endIndex = Array.from(source.querySelectorAll(selector)).indexOf(endElement);
+
+		if (startIndex === -1 || endIndex === -1) {
+			console.error("Selection is outside the source range");
+			return;
+		}
+
+		// 기존 강조 제거
+		clearSelection(source);
+		clearSelection(target);
+
+		// 새 강조 추가
+		highlightSelection(source, startIndex, endIndex + 1); // endIndex는 범위 포함
+		highlightSelection(target, startIndex, endIndex + 1);
+	};
+
+	// 드래그 중 동기화
+	source.addEventListener("mousemove", syncHighlight);
+
+	// 드래그 완료 후 클래스 유지
+	source.addEventListener("mouseup", syncHighlight);
+};
+
+// 양방향 동기화 설정
+syncSelectionHighlight("response-hex", "response-unicode");
+syncSelectionHighlight("response-unicode", "response-hex");
+
+
+
