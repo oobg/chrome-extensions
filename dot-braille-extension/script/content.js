@@ -1,11 +1,10 @@
 (() => {
 	const script = document.createElement("script");
 	script.src = chrome.runtime.getURL("script/braille-api.js"); // 확장 프로그램 내부 스크립트 경로
-	script.type = "module"; // 필요 시 모듈로 설정
-	(document.head || document.documentElement).appendChild(script);
 	script.onload = () => {
 		script.remove(); // 삽입 후 DOM에서 제거
 	};
+	(document.head || document.documentElement).appendChild(script);
 
 	const container = document.createElement("div");
 	container.id = "shadow-container";
@@ -216,6 +215,9 @@
 			console.log(window.top);
 			// const { hex, unicode } = await window.fetchBraille(text);
 			// console.log("Braille result:", hex, unicode);
+			window.fetchBraille("Hello, World!").then(result => {
+				console.log("Braille result:", result);
+			});
 		}
 	});
 })();
