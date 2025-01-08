@@ -45,10 +45,11 @@ chrome.contextMenus.onClicked.addListener((OnClickData, tab) => {
 	if (OnClickData.selectionText.length === 0) return;
 	const text = OnClickData.selectionText;
 
-	chrome.windows.create({
-		url: `index.html?request-text=${encodeURIComponent(text)}`, // 선택된 텍스트를 URL에 포함
-		type: "popup",
-		width: 500,
-		height: 400,
+	// 선택된 텍스트를 chrome.storage에 저장
+	chrome.storage.local.set({ selectedText: text }, () => {
+		console.log("선택된 텍스트 저장:", text);
 	});
+
+	// 팝업창 열기
+	chrome.action.openPopup();
 });

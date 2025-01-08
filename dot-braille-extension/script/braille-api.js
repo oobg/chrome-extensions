@@ -36,6 +36,11 @@ const makeFetchData = async () => {
 		"LINE": 7
 	}
 
+	// 선택된 텍스트를 chrome.storage에 저장
+	chrome.storage.local.set({ selectedText: text }, () => {
+		console.log("선택된 텍스트 저장:", text);
+	});
+
 	return { url, body };
 }
 

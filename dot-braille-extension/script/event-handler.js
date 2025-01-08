@@ -62,21 +62,13 @@ window.addEventListener("DOMContentLoaded", async () => {
 	setReadOnly(document.getElementById('response-hex'));
 	setReadOnly(document.getElementById('response-unicode'));
 
-	// URL에서 전달된 텍스트 추출
-	const urlParams = new URLSearchParams(window.location.search);
-	if (urlParams.has("request-text")) {
-		const selectedText = urlParams.get("request-text");
-
-		// 선택된 텍스트를 입력창에 표시
-		const requestTextInput = document.getElementById("request-text");
-		if (selectedText) {
-			requestTextInput.value = selectedText;
+	chrome.storage.local.get("selectedText", (result) => {
+		if (result.selectedText) {
+			const requestTextInput = document.getElementById("request-text");
+			requestTextInput.value = result.selectedText;
+			document.getElementById("request-button").click();
 		}
-
-		// 버튼 클릭 이벤트 처리
-		const requestButton = document.getElementById("request-button");
-		requestButton.click();
-	}
+	});
 });
 
 document.getElementById('request-text').onkeydown = onEnterFetchBraille;
