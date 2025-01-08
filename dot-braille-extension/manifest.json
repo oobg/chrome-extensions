@@ -7,13 +7,19 @@
     "default_popup": "index.html"
   },
   "icons": {
+    "16": "img/icon.png",
     "60": "img/icon.png"
   },
   "permissions": [
     "storage",
+    "contextMenus",
     "declarativeNetRequest",
     "declarativeNetRequestWithHostAccess"
   ],
+  "background": {
+    "service_worker": "script/background.js",
+    "type": "module"
+  },
   "host_permissions": [
     "https://dev-apps.dotincorp.com/*",
     "https://apps-dotincorp.com/*"
