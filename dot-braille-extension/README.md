@@ -2,7 +2,7 @@
 
 ## 최신버전 다운로드
 
-- [Latest version (ZIP)](../dist/dot-braille-extension.zip)
+- <a href="https://github.com/oobg/chrome-extensions/raw/refs/heads/main/dist/dot-braille-extension.zip" download>Latest version (ZIP)</a>
 
 ## history
 
