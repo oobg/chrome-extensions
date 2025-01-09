@@ -37,12 +37,20 @@ const setReadOnly = (element) => {
 	});
 };
 
+const onChangeOptions = async () => {
+	saveSettings();
+	const text = document.getElementById('request-text').value;
+	if (text.length > 0) {
+		await fetchBraille();
+	}
+}
+
 // 이벤트 핸들러 등록
-document.getElementById("api-server").onchange = saveSettings;
-document.getElementById("engine").onchange = saveSettings;
-document.getElementById("language").onchange = saveSettings;
-document.getElementById("grade").onchange = saveSettings;
-document.getElementById("cell").onchange = saveSettings;
+document.getElementById("api-server").onchange = onChangeOptions;
+document.getElementById("engine").onchange = onChangeOptions;
+document.getElementById("language").onchange = onChangeOptions;
+document.getElementById("grade").onchange = onChangeOptions;
+document.getElementById("cell").onchange = onChangeOptions;
 
 window.addEventListener("DOMContentLoaded", async () => {
 	const settings = await loadSettings();
