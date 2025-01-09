@@ -37,12 +37,34 @@ const setReadOnly = (element) => {
 	});
 };
 
+const updateBodyWidth = () => {
+	const style = document.body.style;
+	const cell = getIdValue('cell');
+
+	// 셀 값에 따른 너비 매핑
+	const widthMapping = {
+		'8': 250,
+		'12': 330,
+		'20': 500,
+		'30': 710,
+	};
+
+	// 매핑 값으로 스타일 설정
+	const width = Math.max(widthMapping[cell], 500);
+	if (width) {
+		style.width = `${width}px`;
+	} else {
+		console.warn('Invalid cell value or no width mapping found');
+	}
+};
+
 const onChangeOptions = async () => {
 	saveSettings();
 	const text = document.getElementById('request-text').value;
 	if (text.length > 0) {
 		await fetchBraille();
 	}
+	updateBodyWidth();
 }
 
 // 이벤트 핸들러 등록
@@ -75,6 +97,7 @@ window.addEventListener("DOMContentLoaded", async () => {
 			const requestTextInput = document.getElementById("request-text");
 			requestTextInput.value = result.selectedText;
 			document.getElementById("request-button").click();
+			updateBodyWidth();
 		}
 	});
 });
